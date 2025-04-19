@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_security.datastore import SQLAlchemyUserDatastore
 from flask_security.core import Security
-
+from datetime import timedelta
 # Initialize database
 db = SQLAlchemy()
 
@@ -24,6 +24,7 @@ def create_app():
     app.config["SECURITY_REGISTERABLE"] = True
     app.config["WTF_CSRF_ENABLED"] = False  # Disable CSRF globally
     app.config["SECURITY_CSRF_PROTECT"] = False  # Disable CSRF for Flask-Security
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
 
     CORS(app)
 

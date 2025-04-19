@@ -28,9 +28,11 @@ const RetailerDashboard = () => {
           api.getRetailerInventory(),
           api.getFoodRequests()
         ]);
+        if(inventoryRes.data){
+          setInventory(inventoryRes.data);
+        }
         
-        setInventory(inventoryRes.data);
-        setFoodRequests(requestsRes.data);
+        if(requestsRes.data){setFoodRequests(requestsRes.data);}
       } catch (error) {
         console.error('Error fetching data:', error);
         toast.error('Failed to load dashboard data');

@@ -30,8 +30,8 @@ const NGODashboard = () => {
           api.getNgoRequests()
         ]);
         
-        setFoodListings(listingsRes.data);
-        setMyRequests(requestsRes.data);
+        if(listingsRes.data){setFoodListings(listingsRes.data);}
+        if(listingsRes.data){setMyRequests(requestsRes.data);}
       } catch (error) {
         console.error('Error fetching data:', error);
         toast.error('Failed to load dashboard data');

@@ -6,7 +6,11 @@ import RetailerDashboard from './RetailerDashboard';
 import NGODashboard from './NGODashboard';
 
 const Dashboard = () => {
-  const { isRetailer, isNGO } = useAuth();
+  const { isRetailer, isNGO, role, user } = useAuth();
+  console.log('isRetailer?: ', isRetailer)
+  console.log('isNGO?: ', isNGO)
+  console.log('role ', role)
+  console.log('user ', user.roles[0])
 
   return (
     <DashboardLayout>

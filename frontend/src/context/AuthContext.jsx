@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState(null);
 
   // Check for existing session on load
   useEffect(() => {
@@ -33,10 +34,13 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await api.login(email, password);
-      // console.log('response in authContext: ', response.user)
+      console.log('response in authContext: ', response.user)
       setUser(response.user);
-      // console.log('User is set')
+      console.log('User is set: ', response.user.roles[0])
+      setRole(response.user.roles[0])
+      console.log('Role is set: ', role)
       localStorage.setItem('user', JSON.stringify(response.user));
+      localStorage.setItem('role', JSON.stringify(response.user.roles[0]));
       localStorage.setItem('token', response.token);
       return response;
     } catch (err) {
@@ -67,6 +71,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('role');
     localStorage.removeItem('token');
   };
 
@@ -76,9 +81,10 @@ export const AuthProvider = ({ children }) => {
     login,
     signup,
     logout,
+    role,
     isAuthenticated: !!user,
-    isRetailer: user?.role === 'retailer',
-    isNGO: user?.role === 'ngo',
+    isRetailer: user?.roles[0] === 'Retailer',
+    isNGO: user?.roles[0] === 'Ngo',
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
