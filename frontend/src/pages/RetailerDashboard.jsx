@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { PlusCircle, Calendar } from 'lucide-react';
 import { api } from '../services/api';
@@ -31,7 +30,7 @@ const RetailerDashboard = () => {
         if(inventoryRes.data){
           setInventory(inventoryRes.data);
         }
-        
+
         if(requestsRes.data){setFoodRequests(requestsRes.data);}
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -54,15 +53,21 @@ const RetailerDashboard = () => {
 
   const handleAddItem = async (e) => {
     e.preventDefault();
-    
+
     try {
+      console.log('Adding item: ', {
+        name: newItem.name,
+        quantity: parseInt(newItem.quantity, 10),
+        expiryDate: newItem.expiryDate
+      })
       const response = await api.addInventoryItem({
         name: newItem.name,
         quantity: parseInt(newItem.quantity, 10),
         expiryDate: newItem.expiryDate
       });
-      
+      console.log('setting inventory to: ', [...inventory, response.data])
       setInventory([...inventory, response.data]);
+      console.log('Item added to inventory');
       toast.success('Item added to inventory');
       setDialogOpen(false);
       resetForm();
@@ -114,83 +119,14 @@ const RetailerDashboard = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="p-6 space-y-6">
+      <div className="flex justify-center">
         <h1 className="text-2xl font-bold">Retailer Dashboard</h1>
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <PlusCircle className="h-4 w-4 mr-2" />
-              Add Food Item
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add New Food Item</DialogTitle>
-              <DialogDescription>
-                Enter details about the food item you want to add to your inventory.
-              </DialogDescription>
-            </DialogHeader>
-            
-            <form onSubmit={handleAddItem}>
-              <div className="grid gap-4 py-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="name">Food Name</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={newItem.name}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                
-                <div className="grid gap-2">
-                  <Label htmlFor="quantity">Quantity</Label>
-                  <Input
-                    id="quantity"
-                    name="quantity"
-                    type="number"
-                    value={newItem.quantity}
-                    onChange={handleInputChange}
-                    required
-                    min="1"
-                  />
-                </div>
-                
-                <div className="grid gap-2">
-                  <Label htmlFor="expiryDate">Expiry Date</Label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-muted-foreground">
-                      <Calendar size={16} />
-                    </div>
-                    <Input
-                      id="expiryDate"
-                      name="expiryDate"
-                      type="date"
-                      className="pl-10"
-                      value={newItem.expiryDate}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                  Cancel
-                </Button>
-                <Button type="submit">Add Item</Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Nearby NGO Food Requests */}
-        <Card>
+        <Card className="mb-6 md:mb-0">
           <CardHeader>
             <CardTitle>Nearby NGO Food Requests</CardTitle>
             <CardDescription>Food requests from NGOs in your area</CardDescription>
@@ -231,10 +167,81 @@ const RetailerDashboard = () => {
         </Card>
 
         {/* Inventory Overview */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Inventory Overview</CardTitle>
-            <CardDescription>Your current food inventory</CardDescription>
+        <Card className="mb-6 md:mb-0">
+          <CardHeader className="flex items-center justify-between">
+            <div>
+              <CardTitle>Inventory Overview</CardTitle>
+              <CardDescription>Your current food inventory</CardDescription>
+            </div>
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button>
+                  <PlusCircle className="h-4 w-4 mr-2" />
+                  Add Food Item
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Add New Food Item</DialogTitle>
+                  <DialogDescription>
+                    Enter details about the food item you want to add to your inventory.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <form onSubmit={handleAddItem}>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="name">Food Name</Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        value={newItem.name}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="quantity">Quantity</Label>
+                      <Input
+                        id="quantity"
+                        name="quantity"
+                        type="number"
+                        value={newItem.quantity}
+                        onChange={handleInputChange}
+                        required
+                        min="1"
+                      />
+                    </div>
+
+                    <div className="grid gap-2">
+                      <Label htmlFor="expiryDate">Expiry Date</Label>
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-muted-foreground">
+                          <Calendar size={16} />
+                        </div>
+                        <Input
+                          id="expiryDate"
+                          name="expiryDate"
+                          type="date"
+                          className="pl-10"
+                          value={newItem.expiryDate}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <DialogFooter>
+                    <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
+                      Cancel
+                    </Button>
+                    <Button type="submit">Add Item</Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
           </CardHeader>
           <CardContent>
             {inventory.length === 0 ? (

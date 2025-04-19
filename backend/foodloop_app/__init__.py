@@ -5,11 +5,18 @@ from flask_jwt_extended import JWTManager
 from flask_security.datastore import SQLAlchemyUserDatastore
 from flask_security.core import Security
 from datetime import timedelta
+
 # Initialize database
 db = SQLAlchemy()
 
-# Import models
-from .models import User, Role
+# Import ALL MODELS here
+from .models import (
+    User,
+    Role,
+    InventoryItem,
+    Food,
+    FoodRequest,
+)  # 👈 add all new models here
 
 # Initialize user_datastore outside of create_app
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
@@ -25,8 +32,7 @@ def create_app():
     app.config["WTF_CSRF_ENABLED"] = False  # Disable CSRF globally
     app.config["SECURITY_CSRF_PROTECT"] = False  # Disable CSRF for Flask-Security
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
-
-    CORS(app)
+    CORS(app, resources={r"/*": {"origins": "*"}})
 
     db.init_app(app)
     jwt = JWTManager(app)
