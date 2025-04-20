@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { PlusCircle, Calendar, Phone } from 'lucide-react';
 import { api } from '../services/api';
