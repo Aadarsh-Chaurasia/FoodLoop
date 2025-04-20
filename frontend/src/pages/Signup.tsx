@@ -10,8 +10,18 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import Navbar from '../components/Navbar';
 import { toast } from 'sonner';
 
+interface SignupFormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  city: string;
+  pincode: string;
+  contact: string;
+  role: string;
+}
+
 const Signup = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignupFormData>({
     email: '',
     password: '',
     confirmPassword: '',
@@ -25,12 +35,12 @@ const Signup = () => {
   const { signup } = useAuth();
   const navigate = useNavigate();
   
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
   
-  const handleSelectRole = (value) => {
+  const handleSelectRole = (value: string) => {
     setFormData(prev => ({ ...prev, role: value }));
   };
   
@@ -64,7 +74,7 @@ const Signup = () => {
     return true;
   };
   
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) return;
