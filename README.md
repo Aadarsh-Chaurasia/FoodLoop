@@ -1,10 +1,3 @@
-# FoodLoop - Connecting Retailers and NGOs to Reduce Food Waste
-
-![FoodLoop Homepage](assets/foodloop-homepage.png)
-Got it! Here’s the improved version of your `README.md` following your preferred structure—narrative-first, then screenshots in a natural flow without using tables. This version builds the story of the platform progressively, starting with the homepage, moving through authentication, and then diving into the user-specific dashboards (Retailers first, then NGOs).
-
----
-
 # 🥗 FoodLoop – Bridging Surplus Food with Community Needs
 
 **FoodLoop** is a web platform that connects food retailers with nearby NGOs to reduce food waste and support communities. Retailers can list surplus food that would otherwise go to waste, and NGOs can request or claim it to help those in need.
