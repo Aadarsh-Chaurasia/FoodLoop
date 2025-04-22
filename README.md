@@ -82,7 +82,7 @@ NGOs can browse through listed food and use the "Contact" button to reach out to
 
 ---
 
-## 🚀 Getting Started (Conceptual)
+## 🚀 Getting Started 
 
 This section outlines the setup at a high level. For complete setup instructions, refer to the full repository documentation.
 
