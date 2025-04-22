@@ -151,7 +151,4 @@ Open to pull requests and collaboration! If you want to add features or fix bugs
 
 ---
 
-Let me know if you'd like this in a downloadable `.md` file format or published as part of your repo!Got it! Here’s the improved version of your `README.md` following your preferred structure—narrative-first, then screenshots in a natural flow without using tables. This version builds the story of the platform progressively, starting with the homepage, moving through authentication, and then diving into the user-specific dashboards (Retailers first, then NGOs).
-
----
 
